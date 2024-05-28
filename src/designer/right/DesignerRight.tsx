@@ -1,15 +1,32 @@
-import MenuList from "./MenuList";
+
 import ConfigContent from "./ConfigContent";
 import rightStore from "./RightStore";
 import {observer} from "mobx-react";
-
+import { Tabs, theme } from "antd";
+import { useEffect } from "react";
+import './DesignerRight.less'
+const { useToken } = theme;
 const DesignerRight = observer(() => {
-    const {visible} = rightStore;
+    const {menus, setActiveMenu} = rightStore;
+    const { token } = useToken();
+    useEffect(() => {
+        menus && menus.length && setActiveMenu(menus[0]['key'])
+    }, [menus, setActiveMenu])
     return (
-        <>
-            <MenuList/>
-            {visible && <ConfigContent/>}
-        </>
+        <Tabs
+            className={'designer-right-tabs-panel'}
+            style={{height: '100%', background: token.colorBgContainer}}
+            tabBarStyle={{height: '100%'}}
+            tabPosition={'right'}
+            onChange={(key) => {setActiveMenu(key)}}
+            items={menus.map(item => {
+                return {
+                    label: item.name,
+                    key: item.key,
+                    children: <ConfigContent />,
+                };
+            })}
+        />
     );
 })
 

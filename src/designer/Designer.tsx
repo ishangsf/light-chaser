@@ -97,15 +97,16 @@ const Designer = (props: DesignerProps) => {
     if (!loaded)
         return <Loading/>;
     return (
-        <div style={{backgroundColor: '#1f1f1f'}}>
-            <FrameLayout header={<DesignerHeader/>}
-                         left={<DesignerLeft/>}
-                         content={<DesignerCanvas/>}
-                         right={<DesignerRight/>}
-                         footer={<DesignerFooter/>}/>
-        </div>
+        <FrameLayout 
+            header={<DesignerHeader/>}
+            left={<DesignerLeft/>}
+            content={<DesignerCanvas/>}
+            right={<DesignerRight/>}
+            footer={<DesignerFooter/>}
+        />
     );
 }
 
-export default observer(Designer);
+const DesignerWithStore = observer(Designer);
+export default DesignerWithStore;
 

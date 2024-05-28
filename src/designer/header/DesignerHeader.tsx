@@ -12,9 +12,8 @@ import ProjectHdItemImpl from "./items/project/ProjectHdItemImpl.tsx";
 import ThemeHdItemImpl from "./items/theme/ThemeHdItemImpl.tsx";
 import BluePrintHdImpl from "./items/blue-print/BluePrintHdImpl.tsx";
 import {AfferentFour, ConnectionPointTwo, EfferentFour, Eyes, HardDiskOne, PageTemplate, Theme} from "@icon-park/react";
-import URLUtil from "../../utils/URLUtil.ts";
-import {DesignerMode} from "../DesignerType.ts";
-
+import URLUtil from '../../utils/URLUtil.ts';
+import { DesignerMode } from '../DesignerType.ts';
 
 export interface IHeaderItem {
     icon: ReactNode;
@@ -97,23 +96,21 @@ const Header: React.FC = observer(() => {
         }
 
         return (
-            <>
-                <div className={'designer-header'}>
-                    <div className={'header-left'}>
-                        <div className={'header-title'}>LIGHT CHASER</div>
-                    </div>
-                    <div className={'header-center'}>
-                        {buildHeaderItemUI(centerItems)}
-                    </div>
-                    <div className={'header-right'}>
-                        {buildHeaderItemUI(leftItems)}
-                    </div>
-                    {canvasHdStore.canvasVisible && <CanvasHdConfigImpl/>}
-                    {projectHdStore.projectVisible && <ProjectHdItemImpl/>}
-                    {themeHdStore.themeVisible && <ThemeHdItemImpl/>}
-                    {bluePrintHdStore.bluePrintVisible && <BluePrintHdImpl/>}
+            <div className={'designer-header'}>
+                <div className={'header-left'}>
+                    <div className={'header-title'}>数据可视化系统</div>
                 </div>
-            </>
+                <div className={'header-center'}>
+                    {buildHeaderItemUI(centerItems)}
+                </div>
+                <div className={'header-right'}>
+                    {buildHeaderItemUI(leftItems)}
+                </div>
+                {canvasHdStore.canvasVisible && <CanvasHdConfigImpl/>}
+                {projectHdStore.projectVisible && <ProjectHdItemImpl/>}
+                {themeHdStore.themeVisible && <ThemeHdItemImpl/>}
+                {bluePrintHdStore.bluePrintVisible && <BluePrintHdImpl/>}
+            </div>
         );
     }
 );

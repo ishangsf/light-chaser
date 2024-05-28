@@ -10,7 +10,7 @@ export interface DesignerDragScaleContainerProps {
     onDoubleClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 
-const DesignerDragScaleContainer = memo(observer((props: DesignerDragScaleContainerProps) => {
+const DesignerDragScaleContainer = (props: DesignerDragScaleContainerProps) => {
     const {children, onDoubleClick} = props;
     const containerRef = React.useRef<HTMLDivElement>(null);
     const contentRef = React.useRef<HTMLDivElement>(null);
@@ -47,7 +47,7 @@ const DesignerDragScaleContainer = memo(observer((props: DesignerDragScaleContai
              style={{
                  overflow: "hidden",
                  height: window.innerHeight - 110,
-                 width: window.innerWidth - 115,
+                 width: window.innerWidth - 80,
                  backgroundColor: '#434343',
                  position: 'relative'
              }}>
@@ -65,6 +65,7 @@ const DesignerDragScaleContainer = memo(observer((props: DesignerDragScaleContai
             </div>
         </div>
     )
-}))
+}
 
-export default DesignerDragScaleContainer;
+const DesignerDragScaleContainerObserver = memo(observer(DesignerDragScaleContainer));
+export default DesignerDragScaleContainerObserver;

@@ -56,9 +56,9 @@ const ConfigContent = () => {
     }
 
     const onClose = () => {
-        const {setContentVisible, setActiveMenu} = rightStore;
+        const {setContentVisible, activeConfig} = rightStore;
         setContentVisible && setContentVisible(false);
-        setActiveMenu && setActiveMenu('');
+        activeConfig && activeConfig(null, null);
     }
 
 
@@ -83,5 +83,5 @@ const ConfigContent = () => {
         </div>
     );
 }
-
-export default observer(ConfigContent);
+const ConfigContentObserver = observer(ConfigContent);
+export default ConfigContentObserver;
