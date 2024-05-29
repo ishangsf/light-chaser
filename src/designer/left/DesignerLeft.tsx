@@ -2,12 +2,13 @@ import {observer} from "mobx-react";
 import designerLeftStore, { ILeftMenu } from "./DesignerLeftStore";
 import './DesignerLeft.less';
 import {useEffect, useRef, useState} from "react";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, theme } from "antd";
 import { FilterList } from "./filter-lilst/FilterList";
 import SourceList from "./source-list/SourceList";
 import LayerList from "./layer-list/LayerList";
 import { ComponentList } from "./compoent-lib/ComponentList";
 import {Connect, Filter, Layers, System} from "@icon-park/react";
+const { useToken } = theme;
 
 const menus: Array<ILeftMenu> = [
     {
@@ -34,6 +35,7 @@ const menus: Array<ILeftMenu> = [
 const { Content, Sider } = Layout;
 
 export const DesignerLeft = observer(() => {
+    const { token } = useToken();
     const [items, setItems] = useState<any>();
     // 当前菜单内容区域显示状态
     const [siderCollapsed, setSiderCollapsed] = useState<boolean>(true);
@@ -79,11 +81,10 @@ export const DesignerLeft = observer(() => {
         <Layout style={{height: '100%'}} ref={leftDomRef}>
             <Content style={{height: '100%'}}>
                 <Menu
-                    style={{height: '100%', fontSize: 14}}
+                    style={{height: '100%', fontSize: 14, backgroundColor: token.colorBgLayout}}
                     defaultSelectedKeys={['1']}
                     defaultOpenKeys={['sub1']}
                     mode="inline"
-                    theme="light"
                     selectedKeys={selectedKeys}
                     items={items}
                     onSelect={onSelectHandle}
@@ -95,14 +96,12 @@ export const DesignerLeft = observer(() => {
                 collapsed={siderCollapsed}
                 collapsedWidth={0}
                 defaultCollapsed={true}
-                theme="light"
-                style={{overflow:'auto'}}
+                style={{overflow:'auto', backgroundColor: token.colorBgLayout }}
             >
                 {menu === 'components' && <ComponentList />}
                 {menu === 'layer-list' && <LayerList />}
                 {menu === 'source-list' && <SourceList />}
                 {menu === 'filter-list' && <FilterList />}
-
             </Sider>
         </Layout>
     );

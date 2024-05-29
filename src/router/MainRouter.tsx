@@ -1,6 +1,8 @@
-import {lazy, memo} from 'react';
+import {lazy, memo, useEffect, useState} from 'react';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import {ConfigProvider, theme} from "antd";
+import {ConfigProvider} from "antd";
+import themeConfigStore from '../store/themeStore.ts';
+import { observer } from 'mobx-react';
 
 const DesignerViewPage = lazy(() => import('../pages/view/DesignerViewPage.tsx'));
 const DesignerPage = lazy(() => import('../pages/designer/DesignerPage.tsx'));
@@ -67,17 +69,21 @@ const router = createBrowserRouter([
     }
 ])
 
-const MainRouter = memo(() => {
+const MainRouter = () => {
+    const [ theme, setTheme ] = useState();
+    const { themeConfig } =  themeConfigStore
+    useEffect(() => {
+        setTheme(themeConfig)
+    }, [themeConfig])
     return (
         <ConfigProvider 
-            theme={{
-                algorithm: [theme.darkAlgorithm]
-            }}
+            theme={theme}
         >
             <RouterProvider router={router}/>
             <GlobalMessage/>
         </ConfigProvider>
     );
-})
+}
 
-export default MainRouter
+const MainRouterObserver = observer(MainRouter);
+export default MainRouterObserver

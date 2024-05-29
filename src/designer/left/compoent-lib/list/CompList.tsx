@@ -11,6 +11,7 @@ import componentListStore from "../ComponentListStore";
 import {AbstractDefinition, BaseInfoType} from "../../../../framework/core/AbstractDefinition";
 import DragAddProvider from "../../../../framework/drag-scale/DragAddProvider";
 import historyRecordOperateProxy from "../../../operate-provider/undo-redo/HistoryRecordOperateProxy";
+import { Card } from 'antd';
 
 class CompList extends Component {
 
@@ -25,6 +26,7 @@ class CompList extends Component {
 
     componentDidMount() {
         //处理拖拽元素到画布中
+        debugger;
         this.dragAddProvider = new DragAddProvider(
             document.getElementById("component-drag-container")!,
             document.getElementById("designer-ds-content")!,
@@ -64,7 +66,7 @@ class CompList extends Component {
     }
 
     addItem = (compKey: string, position = [0, 0]) => {
-        let {setAddRecordCompId} = eventOperateStore;
+        const { setAddRecordCompId } = eventOperateStore;
         const {definitionMap} = editorDesignerLoader;
         const {compName, width = 320, height = 200} = definitionMap[compKey].getBaseInfo();
         const movableItem: ILayerItem = {
@@ -85,40 +87,53 @@ class CompList extends Component {
 
     getChartDom = () => {
         const chartDom = [];
-        let {compInfoArr, search, categories, subCategories} = componentListStore;
+        const {compInfoArr, search, categories, subCategories} = componentListStore;
+        let compInfoFilterArr: any[] = compInfoArr.slice();
         if (categories !== "all") {
-            compInfoArr = compInfoArr.filter((item: BaseInfoType) => {
+            compInfoFilterArr = compInfoArr.filter((item: BaseInfoType) => {
                 return item.categorize === categories;
             })
         }
         if (subCategories !== "all") {
-            compInfoArr = compInfoArr.filter((item: BaseInfoType) => {
+            compInfoFilterArr = compInfoArr.filter((item: BaseInfoType) => {
                 return item.subCategorize === subCategories;
             })
         }
         if (search !== '') {
-            compInfoArr = compInfoArr.filter((item: BaseInfoType) => {
+            compInfoFilterArr = compInfoArr.filter((item: BaseInfoType) => {
                 return item.compName.indexOf(search) >= 0;
             })
         }
-        for (let i = 0; i < compInfoArr.length; i++) {
-            const compInfo: BaseInfoType = compInfoArr[i];
+        for (let i = 0; i < compInfoFilterArr.length; i++) {
+            const compInfo: BaseInfoType = compInfoFilterArr[i];
             const {compName, compKey} = compInfo;
             const definition: AbstractDefinition = DesignerLoaderFactory.getLoader(DesignerMode.EDIT).definitionMap[compKey];
             const chartImg = definition.getChartImg();
             chartDom.push(
-                <div key={i + ''} className={'list-item droppable-element'} draggable={true}
-                     onDoubleClick={() => this.addItem(compKey)}
-                     data-type={compKey}>
+                <Card 
+                    className={'list-item droppable-element'}
+                    key={i + ''}
+                    size='small'
+                    draggable={true}
+                    title={compName}
+                    // bordered={false}
+                    data-type={compKey}
+                    data-name={compName}
+                    type='inner'
+                    style={
+                        { 
+                            width: '100%',
+                            height: 120,
+                            marginBottom: 4
+                    }}
+                    onDoubleClick={() => this.addItem(compKey)}
+                >
                     <div style={{pointerEvents: 'none'}}>
-                        <div className={'item-header'} ref={'drag-target'}>
-                            <div className={'item-name'}>{compName}</div>
-                        </div>
                         <div className={'item-content'}>
-                            <img src={chartImg!} alt={compName}/>
+                            <img style={{width: 100, height: 60}} src={chartImg!} alt={compName}/>
                         </div>
                     </div>
-                </div>
+                </Card>
             )
         }
         return chartDom;
@@ -132,16 +147,16 @@ class CompList extends Component {
 
     render() {
         return (
-            <>
+            <div style={{padding: 4}}>
                 <div className={'list-search'}>
                     <Input placeholder="搜索组件" onChange={this.searchChart}/>
                 </div>
                 <div className={'list-items'} id={'component-drag-container'}>
                     {this.getChartDom()}
                 </div>
-            </>
+            </div>
         );
     }
 }
-
-export default observer(CompList);
+const compListObserver = observer(CompList);
+export default compListObserver;

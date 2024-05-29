@@ -15,8 +15,19 @@ const DesignerRight = observer(() => {
     return (
         <Tabs
             className={'designer-right-tabs-panel'}
-            style={{height: '100%', background: token.colorBgContainer}}
-            tabBarStyle={{height: '100%'}}
+            style={
+                {
+                    height: '100%',
+                    background: token.colorBgLayout,
+                    borderLeft: `1px solid ${token.colorBorder}`
+                }
+            }
+            tabBarStyle={
+                {
+                    height: '100%',
+                    borderLeft: `1px solid ${token.colorBorder}`
+                }
+            }
             tabPosition={'right'}
             onChange={(key) => {setActiveMenu(key)}}
             items={menus.map(item => {

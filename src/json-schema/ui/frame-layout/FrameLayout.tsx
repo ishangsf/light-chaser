@@ -13,10 +13,11 @@ export interface FrameLayoutProps {
     left?: ReactNode;
     right?: ReactNode;
     content?: ReactNode;
+    type?: 'blueprint' | 'editView'
 }
 
 const FrameLayout: React.FC<FrameLayoutProps> = (props) => {
-    const {header, footer, left, right, content} = props;
+    const {header, footer, left, right, content, type = 'editView'} = props;
     const {menus} = rightStore;
     const {menu} = designerLeftStore;
     //更新标尺位置
@@ -33,7 +34,7 @@ const FrameLayout: React.FC<FrameLayoutProps> = (props) => {
         <Layout style={{height: '100%', overflow: 'hidden'}}>
             <Header style={{height: 50,padding: 0, background: token.colorBgContainer}}>{header}</Header>
             <Layout style={{height: 'calc(100% - 50px)', padding: 0}}>
-                <Sider theme={token.colorBgBase === '#fff' ? 'light' : 'dark'} style={{background: token.colorBgBase}} width={menu === '' ? 130 : 320}>{left}</Sider>
+                <Sider theme={token.colorBgBase === '#fff' ? 'light' : 'dark'} style={{background: token.colorBgBase}} width={menu === '' && type === 'editView' ? 130 : 320}>{left}</Sider>
                 <Layout>
                     <Layout style={{height: 'calc(100% - 40px)', padding: 0}}>
                         <Content>{content}</Content>
