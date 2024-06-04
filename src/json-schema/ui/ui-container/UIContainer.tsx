@@ -1,8 +1,8 @@
 import React from "react";
 import './UIContainer.less';
-import {Tooltip} from "antd";
+import {Tooltip, Typography} from "antd";
 import {Help} from "@icon-park/react";
-
+const { Text } = Typography;
 export interface UIContainerProps {
     label?: string;
     tip?: string;
@@ -19,7 +19,7 @@ export const UIContainer: React.FC<UIContainerProps> = (props) => {
         <div className={`ui-container ${className || ''}`} style={{...containerStyle}}>
             {label &&
                 <div className={'ui-container-label'} style={{...labelStyle}}>
-                    <div>{label}</div>
+                    <div><Text style={{fontSize: '12px'}}>{label}</Text></div>
                     {tip && <div className={'ui-container-tip'}>
                         <Tooltip title={tip} style={{marginLeft: 1}}><Help/></Tooltip></div>}
                 </div>}

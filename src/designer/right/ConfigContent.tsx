@@ -12,12 +12,14 @@ import DesignerLoaderFactory from "../loader/DesignerLoaderFactory";
 import AbstractController from "../../framework/core/AbstractController";
 import {DesignerMode} from "../DesignerType.ts";
 import {Close} from "@icon-park/react";
-
+import { Col, Layout, Row, theme } from 'antd';
+const { useToken } = theme;
 export interface ConfigType<T extends AbstractController = AbstractDesignerController> {
     controller: T;
 }
 
 const ConfigContent = () => {
+    const { token } = useToken();
     const createProxy = (controller: AbstractDesignerController) => {
         return new Proxy(controller, {
             get(target, prop) {
@@ -56,9 +58,9 @@ const ConfigContent = () => {
     }
 
     const onClose = () => {
-        const {setContentVisible, setActiveMenu} = rightStore;
+        const {setContentVisible, activeConfig} = rightStore;
         setContentVisible && setContentVisible(false);
-        setActiveMenu && setActiveMenu('');
+        activeConfig && activeConfig(null, null);
     }
 
 
@@ -71,17 +73,22 @@ const ConfigContent = () => {
         }
     }
     return (
-        <div className={'lc-config-panel'}>
-            <div className={'lc-panel-top'}>
-                <div className={'panel-title'}>
-                    <span>{activeMenuName}</span></div>
-                <div className={'panel-operate'} onClick={onClose}><Close/></div>
-            </div>
-            <div className={'lc-panel-content'}>
-                {buildConfigContent()}
-            </div>
-        </div>
+        <Layout className='ComponentList' style={{height: '100%', overflow: 'hidden'}}>
+            <Layout.Header className={'layoutHeader'} style={{height: 48, backgroundColor: token.colorBgLayout, borderBottom: `1px solid ${token.colorBorder}`}}>
+                <Row style={{lineHeight: '46px'}}>
+                    <Col flex="auto">{activeMenuName}</Col>
+                    <Col className="oerate-btn" flex={'16px'}>
+                        <Close style={{cursor: 'pointer'}} onClick={onClose}/>
+                    </Col>
+                </Row>
+            </Layout.Header>
+            <Layout.Content style={{height: '100%'}}>
+                <div className={'lc-panel-content'}>
+                    {buildConfigContent()}
+                </div>
+            </Layout.Content>
+        </Layout>
     );
 }
-
-export default observer(ConfigContent);
+const ConfigContentObserver = observer(ConfigContent);
+export default ConfigContentObserver;

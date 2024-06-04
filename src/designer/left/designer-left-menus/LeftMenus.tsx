@@ -1,9 +1,7 @@
 import {observer} from "mobx-react";
 import './LeftMenus.less';
-import designerLeftStore, {ILeftMenu} from "../DesignerLeftStore";
-import eventOperateStore from "../../operate-provider/EventOperateStore";
+import designerLeftStore, { ILeftMenu } from "../DesignerLeftStore";
 import {Connect, Filter, Layers, System} from "@icon-park/react";
-
 
 const menus: Array<ILeftMenu> = [
     {
@@ -29,15 +27,14 @@ const menus: Array<ILeftMenu> = [
 ];
 
 const LeftMenus = () => {
-    const changeMenu = (menu: string) => {
-        if (!menu || menu === '')
+    const changeMenu = (currMenu: string) => {
+        const {setMenu, menu} = designerLeftStore;
+        if (!currMenu || currMenu === '')
             return;
-        const {setMenu} = designerLeftStore;
-        setMenu(menu);
-        //更新标尺位置
-        const {rulerRef} = eventOperateStore;
-        if (rulerRef)
-            rulerRef.ruleWheel();
+        if (currMenu === menu) {
+            currMenu = '';
+        }
+        setMenu(currMenu);
     }
 
     const buildClassifyList = () => {
@@ -62,5 +59,5 @@ const LeftMenus = () => {
         </div>
     );
 }
-
-export default observer(LeftMenus);
+const LeftMenusObserver = observer(LeftMenus);
+export default LeftMenusObserver;

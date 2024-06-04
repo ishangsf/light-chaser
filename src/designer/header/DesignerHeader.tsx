@@ -11,11 +11,12 @@ import CanvasHdConfigImpl from "./items/canvas/CanvasHdConfigImpl.tsx";
 import ProjectHdItemImpl from "./items/project/ProjectHdItemImpl.tsx";
 import ThemeHdItemImpl from "./items/theme/ThemeHdItemImpl.tsx";
 import BluePrintHdImpl from "./items/blue-print/BluePrintHdImpl.tsx";
-import {AfferentFour, ConnectionPointTwo, EfferentFour, Eyes, HardDiskOne, PageTemplate, Theme} from "@icon-park/react";
-import URLUtil from "../../utils/URLUtil.ts";
-import {DesignerMode} from "../DesignerType.ts";
-
-
+import {AfferentFour, ConnectionPointTwo, EfferentFour, Eyes, HardDiskOne, Moon, PageTemplate, SunOne, Theme} from "@icon-park/react";
+import URLUtil from '../../utils/URLUtil.ts';
+import { DesignerMode } from '../DesignerType.ts';
+import { Switch, theme } from "antd";
+import themeConfigStore from '../../store/themeStore.ts';
+const { useToken } = theme;
 export interface IHeaderItem {
     icon: ReactNode;
     name: string;
@@ -81,7 +82,8 @@ const leftItems: Array<IHeaderItem> = [
 
 
 const Header: React.FC = observer(() => {
-
+    const { setThemeConfig } = themeConfigStore;
+        const { token } = useToken();
         const buildHeaderItemUI = (items: Array<IHeaderItem>): Array<ReactElement> => {
             const headerItems: Array<ReactElement> = [];
             for (let i = 0; i < items.length; i++) {
@@ -96,24 +98,53 @@ const Header: React.FC = observer(() => {
             return headerItems;
         }
 
+        const changeSwitchHandle = (checked: boolean) => {
+            if (checked) {
+                setThemeConfig({
+                    token: {
+                        colorBgLayout: 'rgb(31,31,31)',
+                        colorBorder: 'rgb(64,64,64)'
+                    },
+                    algorithm: [theme.darkAlgorithm]
+                })
+            } else {
+                setThemeConfig({
+                    token: {
+                        
+                    },
+                    algorithm: [theme.defaultAlgorithm]
+                })
+            }
+        }
+
         return (
-            <>
-                <div className={'designer-header'}>
-                    <div className={'header-left'}>
-                        <div className={'header-title'}>LIGHT CHASER</div>
-                    </div>
-                    <div className={'header-center'}>
-                        {buildHeaderItemUI(centerItems)}
-                    </div>
-                    <div className={'header-right'}>
-                        {buildHeaderItemUI(leftItems)}
-                    </div>
-                    {canvasHdStore.canvasVisible && <CanvasHdConfigImpl/>}
-                    {projectHdStore.projectVisible && <ProjectHdItemImpl/>}
-                    {themeHdStore.themeVisible && <ThemeHdItemImpl/>}
-                    {bluePrintHdStore.bluePrintVisible && <BluePrintHdImpl/>}
+            <div className={'designer-header'} style={
+                {
+                    backgroundColor: token.colorBgLayout,
+                    borderBottom: `1px solid ${token.colorBorder}`
+                }
+            }>
+                <div className={'header-left'}>
+                    <div className={'header-title'}>数据可视化系统</div>
                 </div>
-            </>
+                <div className={'header-center'}>
+                    {buildHeaderItemUI(centerItems)}
+                </div>
+                <div className={'header-right'}>
+                    <Switch
+                        style={{width: 50}}
+                        checkedChildren={<Moon theme="outline" size="12" fill="#fff" />}
+                        unCheckedChildren={<SunOne theme="outline" size="12" fill="#fff" />}
+                        defaultChecked
+                        onChange={changeSwitchHandle}
+                    />
+                    {buildHeaderItemUI(leftItems)}
+                </div>
+                {canvasHdStore.canvasVisible && <CanvasHdConfigImpl/>}
+                {projectHdStore.projectVisible && <ProjectHdItemImpl/>}
+                {themeHdStore.themeVisible && <ThemeHdItemImpl/>}
+                {bluePrintHdStore.bluePrintVisible && <BluePrintHdImpl/>}
+            </div>
         );
     }
 );

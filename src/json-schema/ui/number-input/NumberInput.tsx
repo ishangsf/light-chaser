@@ -1,6 +1,6 @@
-import {ChangeEvent} from 'react';
 import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
 import './NumberInput.less';
+import { InputNumber } from 'antd';
 
 export interface NumberInputProps extends UIContainerProps {
     value?: number;
@@ -20,27 +20,25 @@ export default function NumberInput(props: NumberInputProps) {
         max, step, disabled, onChange, ...containerProps
     } = props;
 
-    const _onChange = (event: ChangeEvent<HTMLInputElement>) => {
-        onChange && onChange(Number(event.target.value));
+    const _onChange = (value: number | string | null) => {
+        onChange && onChange(Number(value));
     }
 
     return (
         <UIContainer {...containerProps}>
-            <div className={'lc-number-input-content'}>
-                {prefix && <div>{prefix}&nbsp;</div>}
-                <div className={'lc-number-input-body'}>
-                    <input value={value}
-                           defaultValue={defaultValue}
-                           disabled={disabled}
-                           min={min}
-                           max={max}
-                           step={step}
-                           type={'number'}
-                           className={'lc-number-input'}
-                           onChange={_onChange}/>
-                </div>
-                {suffix && <div>&nbsp;{suffix}</div>}
-            </div>
+            <InputNumber
+                value={value}
+                prefix={prefix}
+                suffix={suffix}
+                defaultValue={defaultValue}
+                disabled={disabled}
+                min={min}
+                max={max}
+                step={step}
+                type={'number'}
+                className={'lc-number-input'}
+                onChange={_onChange}
+            />
         </UIContainer>
     );
 }

@@ -73,4 +73,5 @@ const DesignerFooter = () => {
 
 }
 
-export default observer(DesignerFooter);
+const DesignerFooterObserver = observer(DesignerFooter);
+export default DesignerFooterObserver;

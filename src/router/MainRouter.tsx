@@ -1,7 +1,8 @@
-import {lazy, memo} from 'react';
+import {lazy, memo, useEffect, useState} from 'react';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import {ConfigProvider, MappingAlgorithm, theme} from "antd";
-
+import {ConfigProvider} from "antd";
+import themeConfigStore from '../store/themeStore.ts';
+import { observer } from 'mobx-react';
 
 const DesignerViewPage = lazy(() => import('../pages/view/DesignerViewPage.tsx'));
 const DesignerPage = lazy(() => import('../pages/designer/DesignerPage.tsx'));
@@ -14,24 +15,6 @@ const DataSourceList = lazy(() => import('../pages/home/datasource/DataSourceLis
 const TemplateMarket = lazy(() => import('../pages/home/template-market/TemplateMarket.tsx'));
 const MoreInfo = lazy(() => import('../pages/home/more-info/MoreInfo.tsx'));
 const Demo = lazy(() => import('../test/Demo'));
-
-const studioDarkAlgorithm: MappingAlgorithm = (seedToken, mapToken) => {
-    // 使用 antd 默认的暗色算法生成基础token，这样其他不需要定制的部分则保持原样
-    const baseToken = theme.darkAlgorithm(seedToken, mapToken);
-    return {
-        ...baseToken,
-        colorBgLayout: '#20252b', // Layout 背景色
-        colorBgContainer: '#282c34', // 组件容器背景色
-        colorBgElevated: '#32363e', // 悬浮容器背景色
-    };
-};
-
-const antdComponentTheme = {
-    Menu: {
-        itemBg: 'none',
-        itemColor: '#bfbfbf',
-    }
-}
 
 const router = createBrowserRouter([
     {
@@ -86,16 +69,21 @@ const router = createBrowserRouter([
     }
 ])
 
-const MainRouter = memo(() => {
+const MainRouter = () => {
+    const [ theme, setTheme ] = useState();
+    const { themeConfig } =  themeConfigStore
+    useEffect(() => {
+        setTheme(themeConfig)
+    }, [themeConfig])
     return (
-        <ConfigProvider theme={{
-            algorithm: studioDarkAlgorithm,
-            components: antdComponentTheme
-        }}>
+        <ConfigProvider 
+            theme={theme}
+        >
             <RouterProvider router={router}/>
             <GlobalMessage/>
         </ConfigProvider>
     );
-})
+}
 
-export default MainRouter
+const MainRouterObserver = observer(MainRouter);
+export default MainRouterObserver

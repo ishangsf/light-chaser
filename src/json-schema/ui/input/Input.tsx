@@ -1,6 +1,7 @@
 import {ChangeEvent, FocusEvent, KeyboardEvent} from 'react';
 import './Input.less';
 import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
+import { Input } from 'antd';
 
 export interface InputProps extends UIContainerProps {
     value?: string;
@@ -18,7 +19,7 @@ export interface InputProps extends UIContainerProps {
     onKeyDown?: (event: KeyboardEvent) => void;
 }
 
-export default function Input(props: InputProps) {
+export default function MyInput(props: InputProps) {
     const {
         value, defaultValue, prefix, suffix, type, placeholder, autoFocus, onBlur,
         minLength, maxLength, disabled, onChange, onKeyDown,
@@ -31,7 +32,24 @@ export default function Input(props: InputProps) {
 
     return (
         <UIContainer {...containerProps}>
-            <div className={'lc-input-content'}>
+            <Input 
+                value={value}
+                defaultValue={defaultValue}
+                minLength={minLength}
+                maxLength={maxLength}
+                disabled={disabled}
+                suffix={suffix}
+                prefix={prefix}
+                placeholder={placeholder}
+                onBlur={onBlur}
+                autoFocus={autoFocus}
+                type={type}
+                size='small'
+                onKeyDown={onKeyDown}
+                onChange={_onChange}
+                {...containerProps}
+            />
+            {/* <div className={'lc-input-content'}>
                 {prefix && <div className={'lc-input-prefix'}>{prefix}&nbsp;</div>}
                 <div className={'lc-input-body'}>
                     <input value={value}
@@ -48,7 +66,7 @@ export default function Input(props: InputProps) {
                            onChange={_onChange}/>
                 </div>
                 {suffix && <div className={'lc-input-suffix'}>&nbsp;{suffix}</div>}
-            </div>
+            </div> */}
         </UIContainer>
     );
 }

@@ -10,11 +10,13 @@ const FrameLayout = lazy(() => import("../../json-schema/ui/frame-layout/FrameLa
 
 export default function BluePrint() {
     return (
-        <FrameLayout header={<BPHeader/>}
-                     footer={<BPFooter/>}
-                     left={<BPLeft/>}
-                     right={<BPRight/>}
-                     content={<BPCanvas/>}
+        <FrameLayout 
+            header={<BPHeader/>}
+            footer={<BPFooter/>}
+            left={<BPLeft/>}
+            right={<BPRight/>}
+            content={<BPCanvas/>}
+            type={'blueprint'}
         />
     )
 }
