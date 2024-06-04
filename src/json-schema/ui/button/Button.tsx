@@ -3,7 +3,7 @@ import './Button.less';
 import { Button } from 'antd';
 
 export default function MyButton(props: any) {
-    const {onChange, onClick, ...rest} = props;
+    const {onChange, onClick, type, ...rest} = props;
 
     const _onChange = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         onChange && onChange();
@@ -11,6 +11,6 @@ export default function MyButton(props: any) {
     }
 
     return (
-        <Button {...rest} onClick={_onChange} >{props.children}</Button>
+        <Button htmlType={type === 'submit' ? 'submit' : 'button'} type={type === 'submit' ? 'primary' : type} {...rest} onClick={_onChange} >{props.children}</Button>
     );
 }
