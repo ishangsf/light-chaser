@@ -21,7 +21,8 @@ import {
     AlignVerticalCenterTwo,
     Info
 } from "@icon-park/react";
-
+import { Typography } from 'antd';
+const { Text } = Typography;
 /**
  * lc组件基础信息
  */
@@ -261,7 +262,7 @@ class BaseInfo extends Component<ConfigType, ILayerItem & { version?: string }> 
         return (
             <div className={'base-info-config'}>
                 <div className={'version-info'}>
-                    <span><Info/> {type} | {version ? `版本: ${version}` : '无版本信息'}</span>
+                    <Text><Info/> {type} | {version ? `版本: ${version}` : '无版本信息'}</Text>
                 </div>
                 <LCGUI schema={schema} onFieldChange={this.onFieldChange}/>
             </div>

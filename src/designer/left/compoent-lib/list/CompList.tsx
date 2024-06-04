@@ -3,7 +3,6 @@ import './CompList.less';
 import {observer} from "mobx-react";
 import eventOperateStore from "../../../operate-provider/EventOperateStore";
 import {DesignerMode, ILayerItem} from "../../../DesignerType";
-import Input from "../../../../json-schema/ui/input/Input";
 import DesignerLoaderFactory from "../../../loader/DesignerLoaderFactory";
 import IdGenerate from "../../../../utils/IdGenerate";
 import editorDesignerLoader from "../../../loader/EditorDesignerLoader";
@@ -11,7 +10,7 @@ import componentListStore from "../ComponentListStore";
 import {AbstractDefinition, BaseInfoType} from "../../../../framework/core/AbstractDefinition";
 import DragAddProvider from "../../../../framework/drag-scale/DragAddProvider";
 import historyRecordOperateProxy from "../../../operate-provider/undo-redo/HistoryRecordOperateProxy";
-import { Card } from 'antd';
+import { Card, Input } from 'antd';
 
 class CompList extends Component {
 
@@ -26,7 +25,6 @@ class CompList extends Component {
 
     componentDidMount() {
         //处理拖拽元素到画布中
-        debugger;
         this.dragAddProvider = new DragAddProvider(
             document.getElementById("component-drag-container")!,
             document.getElementById("designer-ds-content")!,
@@ -140,16 +138,16 @@ class CompList extends Component {
     }
 
 
-    searchChart = (data: string | number) => {
+    searchChart = (e: any) => {
         const {setSearch} = componentListStore;
-        setSearch && setSearch(data as string);
+        setSearch && setSearch(e.target.value as string);
     }
 
     render() {
         return (
             <div style={{padding: 4}}>
                 <div className={'list-search'}>
-                    <Input placeholder="搜索组件" onChange={this.searchChart}/>
+                    <Input.Search placeholder="搜索组件" onChange={this.searchChart}/>
                 </div>
                 <div className={'list-items'} id={'component-drag-container'}>
                     {this.getChartDom()}

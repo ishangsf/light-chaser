@@ -1,45 +1,32 @@
-import {Component, ReactNode} from 'react';
+import {ReactNode} from 'react';
 import ReactDOM from "react-dom";
 import './Dialog.less';
 import {Close} from "@icon-park/react";
-
-interface DialogProps {
-    title: string;
-    visible: boolean;
-    onClose?: () => void;
-    width?: number;
-    height?: number;
-    className?: string;
-    children?: ReactNode;
-}
-
-class Dialog extends Component<DialogProps> {
-
-    onClose = () => {
-        const {onClose} = this.props;
+import { Typography, theme } from 'antd';
+const { useToken } = theme;
+const { Text } = Typography;
+const Dialog = (props: { title?: any; visible?: any; children?: any; width?: any; height?: any; className?: any; onClose?: any; }) => {
+    const {title = '设置', visible = false, children, width = 400, height, className} = props;
+    const { token } = useToken();
+    const onClose = () => {
+        const {onClose} = props;
         onClose && onClose();
     }
-
-    render() {
-        const {title = '设置', visible = false, children, width = 400, height, className} = this.props;
-        if (!visible)
-            return null;
-        return ReactDOM.createPortal(
-            <div className={`lc-dialog lc-dialog-mask ${className}`}>
-                <div className={'dialog-body'}>
-                    <div className={'dialog-header'}>
-                        <div className={'dialog-title'}>{title}</div>
-                        <div className={'dialog-close'}><Close style={{cursor: 'pointer'}} onClick={this.onClose}/>
-                        </div>
-                    </div>
-                    <div className="dialog-content" style={{width, height, minHeight: 100}}>
-                        {children}
+    return visible && ReactDOM.createPortal(
+        <div className={`lc-dialog lc-dialog-mask ${className}`}>
+            <div style={{backgroundColor: token.colorBgContainer}} className={'dialog-body'}>
+                <div className={'dialog-header'}>
+                    <div className={'dialog-title'}><Text>{title}</Text></div>
+                    <div className={'dialog-close'}><Close style={{cursor: 'pointer'}} onClick={onClose}/>
                     </div>
                 </div>
-            </div>,
-            document.body
-        ) as ReactNode;
-    }
+                <div className="dialog-content" style={{width, height, minHeight: 100}}>
+                    {children}
+                </div>
+            </div>
+        </div>,
+        document.body
+    ) as ReactNode;
 }
 
 export default Dialog;

@@ -1,14 +1,12 @@
 import './ComponentList.less';
-import {Button, Col, Divider, Flex, Layout, Row, Tabs, theme} from "antd";
-import designerLeftStore from "../DesignerLeftStore";
-import eventOperateStore from "../../operate-provider/EventOperateStore";
+import {Button, Flex, Layout, Tabs, theme} from "antd";
 import {componentCategorize, componentSubCategorize} from "./ComponentCategorize";
 import componentListStore from "./ComponentListStore";
 import {observer} from "mobx-react";
 import {ComponentType, lazy, Suspense, useEffect, useState} from "react";
 import Loading from "../../../json-schema/ui/loading/Loading.tsx";
 import {IIconProps} from "@icon-park/react/lib/runtime";
-import {Close} from "@icon-park/react";
+import PanelHeader from '../PanelHeader.tsx';
 const CompList = lazy(() => import('./list/CompList'));
 
 const { useToken } = theme;
@@ -67,6 +65,7 @@ export const SubCategoryList: React.FC = observer(() => {
     return (
         <Tabs
             className='componentSubCategorizeTabs'
+            destroyInactiveTabPane={true}
             defaultActiveKey="1"
             tabPosition={'left'}
             tabBarStyle={{width: 70, padding: 0}}
@@ -85,19 +84,7 @@ export const ComponentList = () => {
     const { token } = useToken();
     return (
         <Layout className='ComponentList' style={{height: '100%', overflow: 'hidden'}}>
-            <Layout.Header className='layoutHeader' style={{height: 48, backgroundColor: token.colorBgLayout, borderBottom: `1px solid ${token.colorBorder}`}}>
-                <Row style={{lineHeight: '42px'}}>
-                    <Col flex="auto">组件列表</Col>
-                    <Col flex="16px">
-                        <Close style={{cursor: 'pointer'}} onClick={() => {
-                            const {setMenu} = designerLeftStore;
-                            setMenu("");
-                            const {rulerRef} = eventOperateStore;
-                            rulerRef?.ruleWheel();
-                        }}/>
-                    </Col>
-                </Row>
-            </Layout.Header>
+            <PanelHeader title='组件列表' />
             <Layout.Content style={{height: '100%'}}>
                 <Layout style={{height: '100%'}}>
                     <Layout.Sider width={40} style={{ padding: '4px', height: '100%', backgroundColor: token.colorBgContainer}}>

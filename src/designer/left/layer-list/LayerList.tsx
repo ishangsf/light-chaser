@@ -4,9 +4,8 @@ import layerManager from "../../manager/LayerManager.ts";
 import {observer} from "mobx-react";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
 import layerBuilder from "./LayerBuilder";
-import designerLeftStore from "../DesignerLeftStore";
-import {Close} from "@icon-park/react";
-
+import { Layout } from 'antd';
+import PanelHeader from '../PanelHeader.tsx';
 export interface LayerListProps {
     children?: React.ReactNode;
 }
@@ -43,24 +42,16 @@ class LayerList extends Component<LayerListProps> {
 
     render() {
         return (
-            <div className={'layer-list'} ref={ref => this.layerListRef = ref}>
-                <div className={'dl-ll-header'}>
-                    <div className={'dl-ll-header-title'}>图层列表</div>
-                    <div className={'dl-ll-header-operate'}><Close style={{cursor: 'pointer'}} onClick={() => {
-                        const {setMenu} = designerLeftStore;
-                        setMenu("");
-                        const {rulerRef} = eventOperateStore;
-                        rulerRef?.ruleWheel();
-                    }}/></div>
-                </div>
-                <div className={'layer-items'}>
+            <Layout className='ComponentList layer-list' style={{height: '100%', overflow: 'hidden'}}>
+                <PanelHeader title='图层列表' />
+                <Layout.Content className={'layer-items'} style={{height: '100%'}}>
                     <div ref={ref => this.layerItemsContainerRef = ref}>
                         {this.buildLayerList()}
                     </div>
-                </div>
-            </div>
+                </Layout.Content>
+            </Layout>
         );
     }
 }
-
-export default observer(LayerList);
+const layerListObserver = observer(LayerList);
+export default layerListObserver;

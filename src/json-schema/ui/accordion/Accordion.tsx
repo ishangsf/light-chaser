@@ -1,7 +1,7 @@
 import {ReactNode, useEffect, useRef, useState} from 'react';
 import './Accordion.less';
 import Switch from "../switch/Switch";
-import {Tooltip} from "antd";
+import {Collapse, Tooltip} from "antd";
 import {Help, Right} from "@icon-park/react";
 
 interface AccordionProps {
@@ -60,36 +60,41 @@ export default function Accordion(props: AccordionProps) {
             accordionBodyRef.current!.style.display = 'none';
     }
 
-    const switchChange = (_value: boolean) => {
-        calculateFold(_value);
-        onChange && onChange(_value);
-        if (!controlled) setStateValue(_value);
-    }
+    // useEffect(() => {
+    //     if (!showSwitch) {
+    //         //普通模式
+    //         headerRef?.current?.addEventListener("click", titleClickMode);
+    //         accordionBodyRef!.current!.style.display = 'none';
+    //     }
+    //     if (showSwitch && finalValue)
+    //         accordionBodyRef!.current!.style.display = 'block';  //开关模式处于开启
+    //     else
+    //         accordionBodyRef!.current!.style.display = 'none'; //开关模式处于关闭
 
-    useEffect(() => {
-        if (!showSwitch) {
-            //普通模式
-            headerRef?.current?.addEventListener("click", titleClickMode);
-            accordionBodyRef!.current!.style.display = 'none';
-        }
-        if (showSwitch && finalValue)
-            accordionBodyRef!.current!.style.display = 'block';  //开关模式处于开启
-        else
-            accordionBodyRef!.current!.style.display = 'none'; //开关模式处于关闭
-
-        return () => headerRef?.current?.removeEventListener("click", titleClickMode);
-    }, []);
+    //     return () => headerRef?.current?.removeEventListener("click", titleClickMode);
+    // }, []);
 
     return (
-        <div className={'lc-accordion'}>
-            <div className="accordion-header" ref={headerRef} style={{...titleStyle}}>
-                <div className={'title-content'}>{label} &nbsp;
-                    {tip && <Tooltip title={tip}><Help/>&nbsp;&nbsp;</Tooltip>}</div>
-                <div className={'title-switch'}>{showSwitch ?
-                    <Switch value={finalValue} onChange={switchChange}/>
-                    : <Right size={16} className={'accordion-icon'}/>}</div>
-            </div>
-            <div className="lc-accordion-body" style={{...bodyStyle}} ref={accordionBodyRef}>{children}</div>
-        </div>
+        <Collapse
+            style={{marginBottom: 10}}
+            defaultActiveKey={['1']}
+            expandIconPosition={'end'}
+            size={'small'}
+            items={[{
+                label: label,
+                children: children,
+                key: '1',
+            }]}
+        />
+        // <div className={'lc-accordion'}>
+        //     <div className="accordion-header" ref={headerRef} style={{...titleStyle}}>
+        //         <div className={'title-content'}>{label} &nbsp;
+        //             {tip && <Tooltip title={tip}><Help/>&nbsp;&nbsp;</Tooltip>}</div>
+        //         <div className={'title-switch'}>{showSwitch ?
+        //             <Switch value={finalValue} onChange={switchChange}/>
+        //             : <Right size={16} className={'accordion-icon'}/>}</div>
+        //     </div>
+        //     <div className="lc-accordion-body" style={{...bodyStyle}} ref={accordionBodyRef}>{children}</div>
+        // </div>
     );
 }

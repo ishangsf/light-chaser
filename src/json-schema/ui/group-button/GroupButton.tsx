@@ -1,6 +1,7 @@
-import {ReactNode, useState} from "react";
+import {ReactNode} from "react";
 import "./GroupButton.less";
 import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
+import { Segmented } from "antd";
 
 export interface BtnItemType {
     value: string;
@@ -16,27 +17,22 @@ export interface GroupButtonProps extends UIContainerProps {
 
 export const GroupButton = (props: GroupButtonProps) => {
     const {items, onChange, value, defaultValue, ...containerProps} = props;
-    const controlled = value !== undefined && defaultValue === undefined;
-    const [data, setData] = useState(controlled ? value : defaultValue);
-    const finalValue = controlled ? value : data;
 
     return (
-        <UIContainer {...containerProps} className={'group-button'}>
-            <div className={'group-btn-body'}>
-                {items.map((item, index) => {
-                    const {value, content} = item;
-                    return (
-                        <div key={index}
-                             className={`group-btn-item ${finalValue === value ? 'group-btn-item-active' : ''}`}
-                             onClick={(e) => {
-                                 e.stopPropagation();
-                                 if (!controlled)
-                                     setData(value);
-                                 onChange && onChange(value);
-                             }}>{content}</div>
-                    )
-                })}
-            </div>
+        <UIContainer {...containerProps}>
+            <Segmented
+                size='middle'
+                block
+                defaultValue={defaultValue}
+                value={value}
+                options={items.map(item => ({
+                    label: item.content,
+                    value: item.value
+                }))}
+                onChange={(value: string) => {
+                    onChange && onChange(value)
+                }}
+            />
         </UIContainer>
     );
 }

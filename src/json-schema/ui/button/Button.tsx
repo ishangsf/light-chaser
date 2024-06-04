@@ -1,12 +1,8 @@
 import React from 'react';
 import './Button.less';
+import { Button } from 'antd';
 
-export interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onChange"> {
-    children?: React.ReactNode;
-    onChange?: () => void;
-}
-
-export default function Button(props: ButtonProps) {
+export default function MyButton(props: any) {
     const {onChange, onClick, ...rest} = props;
 
     const _onChange = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -15,6 +11,6 @@ export default function Button(props: ButtonProps) {
     }
 
     return (
-        <button {...rest} onClick={_onChange} className="lc-button">{props.children}</button>
+        <Button {...rest} onClick={_onChange} >{props.children}</Button>
     );
 }
