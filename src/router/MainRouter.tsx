@@ -1,4 +1,4 @@
-import {lazy, memo, useEffect, useState} from 'react';
+import {lazy, useEffect, useState} from 'react';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import {ConfigProvider} from "antd";
 import themeConfigStore from '../store/themeStore.ts';
