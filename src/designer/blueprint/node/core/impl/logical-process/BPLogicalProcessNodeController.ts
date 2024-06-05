@@ -1,5 +1,4 @@
 import {AbstractBPNodeController, AnchorPointType, ExecuteInfoType, NodeInfoType} from "../../AbstractBPNodeController";
-import {UpdateOptions} from "../../../../../../framework/core/AbstractController";
 import ComponentUtil from "../../../../../../utils/ComponentUtil";
 import BPNode, {NodeProps} from "../../../BPNode";
 import React from "react";
@@ -43,7 +42,7 @@ export default class BPLogicalProcessNodeController extends AbstractBPNodeContro
         return this.config;
     }
 
-    update(config: LogicalProcessNodeConfigType, upOp: UpdateOptions | undefined): void {
+    update(config: LogicalProcessNodeConfigType): void {
         this.config = ObjectUtil.merge(this.config, config);
     }
 
