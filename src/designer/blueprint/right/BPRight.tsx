@@ -5,23 +5,25 @@ import bluePrintManager from "../manager/BluePrintManager.ts";
 import bpRightStore from "./BPRightStore";
 import Accordion from "../../../json-schema/ui/accordion/Accordion";
 import {AbstractBPNodeController} from "../node/core/AbstractBPNodeController";
-
+import { theme } from "antd";
+const { useToken } = theme;
 export interface BPRightConfigProps {
     controller?: AbstractBPNodeController;
 }
 
 const BPRight: React.FC = observer(() => {
+    const { token } = useToken();
     const {bpNodeControllerInsMap} = bluePrintManager;
     const {activeNode} = bpRightStore;
     const activeNodeController = bpNodeControllerInsMap[activeNode!];
     const nodeConfig = activeNodeController?.getConfig();
     if (!nodeConfig)
-        return <div className={'bp-right node-config-empty-info'}>请激活节点配置...</div>
+        return <div className={'bp-right node-config-empty-info'} style={{backgroundColor: token.colorBgContainer}}>请激活节点配置...</div>
     const apList = [...nodeConfig.input, ...nodeConfig.output]
     const ConfigComponent: React.ComponentType<BPRightConfigProps> | null = activeNodeController.getConfigComponent();
     return (
-        <div className={'bp-right bp-node-config'}>
-            <div className={'bp-node-config-header'}>
+        <div className={'bp-right bp-node-config'} style={{backgroundColor: token.colorBgContainer}}>
+            <div className={'bp-node-config-header'} style={{borderBottom: `1px solid ${token.colorBorder}`}}>
                 <div className={'bp-node-config-name'}>{nodeConfig?.name}</div>
                 <div className={'bp-node-config-info'}>{`${nodeConfig?.id} | ${nodeConfig?.type}`}</div>
             </div>
@@ -29,7 +31,7 @@ const BPRight: React.FC = observer(() => {
                 <Accordion label={'锚点信息'}>
                     {apList.map(ap => {
                         return (
-                            <div className={'bp-ap-info-item'} key={ap.id}>
+                            <div className={'bp-ap-info-item'} key={ap.id} style={{backgroundColor: token.colorInfoBg, border: `1px solid ${token.colorBorder}`}}>
                                 <div className={`bp-ap-info-type ${ap.type === 0 ? 'type-input' : 'type-output'}`}>
                                     {ap.type === 0 ? '输入' : '输出'}
                                 </div>

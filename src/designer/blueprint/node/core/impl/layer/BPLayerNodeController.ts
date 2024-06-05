@@ -47,8 +47,7 @@ export default class BPLayerNodeController extends AbstractBPNodeController<Laye
         return this.config;
     }
 
-    update(config: LayerNodeConfig, upOp: UpdateOptions | undefined): void {
-    }
+    update(): void {}
 
     getNodeInfo(nodeId: string): NodeInfoType | null {
         const {layerConfigs} = layerManager;

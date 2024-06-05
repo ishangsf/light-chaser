@@ -38,8 +38,8 @@ const AddFilterDialog = observer(() => {
             <code style={{color: '#ffd700'}}>{'}'}</code>
         </Grid>
         <div className={'add-filter-dialog-footer'}>
-            <Button onClick={doSave}>保存</Button>&nbsp;&nbsp;
-            <Button onClick={() => filterManager.setVisibility(false)}>取消</Button>
+            <Button style={{float: 'right'}} onClick={doSave}>保存</Button>&nbsp;&nbsp;
+            <Button style={{float: 'right', marginRight: '10px'}} onClick={() => filterManager.setVisibility(false)}>取消</Button>
         </div>
     </Dialog>
 })

@@ -51,7 +51,7 @@ export default class BPConditionNodeController extends AbstractBPNodeController<
         return this.config;
     }
 
-    update(config: ConditionConfigType, upOp?: UpdateOptions | undefined): void {
+    update(config: ConditionConfigType): void {
         this.config = ObjectUtil.merge(this.config, config);
     }
 

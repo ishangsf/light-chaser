@@ -67,7 +67,7 @@ export const CoverConfig = (prop: CoverConfigProps) => {
         <Dialog title={'封面'} className={'cover-config'}
                 visible={true} width={500}
                 onClose={_onClose}>
-            <div className={'cover-content'}>
+            <div className={'cover-content'} style={{paddingBottom: '20px'}}>
                 <div className={'cover-left'}>
                     <AntdUpLoad name={'file'} beforeUpload={beforeUpload} listType={'picture-card'}
                                 fileList={fileList as Array<UploadFile>}
@@ -81,7 +81,7 @@ export const CoverConfig = (prop: CoverConfigProps) => {
                     </AntdUpLoad>
                 </div>
                 <div className={'cover-right'}>
-                    <Button onClick={doSave}>保存</Button>
+                    <Button style={{float: 'right'}} onClick={doSave}>保存</Button>
                 </div>
             </div>
         </Dialog>
