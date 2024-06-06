@@ -1,7 +1,7 @@
 import {Menu} from "antd";
 import {useLocation, useNavigate} from "react-router-dom";
 import {memo} from "react";
-import {Data, LocalPin, NetworkDrive, System} from "@icon-park/react";
+import {Data, LocalPin, NetworkDrive} from "@icon-park/react";
 import { MenuItemType } from "antd/es/menu/interface";
 
 const menus: MenuItemType[] = [
@@ -19,17 +19,7 @@ const menus: MenuItemType[] = [
         key: 'datasource',
         icon: <Data size={16}/>,
         label: '数据源管理'
-    },
-    {
-        key: 'more',
-        icon: <System size={16}/>,
-        label: '更多'
-    },
-    // {
-    //     key: 'template',
-    //     icon: <ShoppingOutlined/>,
-    //     label: '模板市场'
-    // }
+    }
 ]
 
 export const HomeMenus = memo(() => {
