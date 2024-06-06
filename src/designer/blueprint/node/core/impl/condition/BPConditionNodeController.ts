@@ -12,7 +12,7 @@ export interface ConditionConfigType extends NodeInfoType {
 
 export default class BPConditionNodeController extends AbstractBPNodeController<ConditionConfigType> {
 
-    private handler: Function | null = null;
+    private handler: ((...args: any[]) => any) | null = null;
 
     async create(container: HTMLElement, config: ConditionConfigType): Promise<void> {
         this.config = config;

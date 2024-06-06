@@ -12,7 +12,7 @@ export interface LogicalProcessNodeConfigType extends NodeProps {
 
 export default class BPLogicalProcessNodeController extends AbstractBPNodeController<LogicalProcessNodeConfigType> {
 
-    private handler: Function | null = null;
+    private handler: ((...args: any[]) => any) | null = null;
 
     async create(container: HTMLElement, config: LogicalProcessNodeConfigType): Promise<void> {
         this.config = config;

@@ -207,6 +207,7 @@ export const BPFilterNodeList = () => {
 
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const nodeListMapping: { [key: string]: React.FC } = {
     'layer': BPLayerNodeList,
     'logical': BPLogicalNodeList,

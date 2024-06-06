@@ -68,5 +68,5 @@ const CanvasHdConfigImpl = () => {
     );
 
 }
-
-export default observer(CanvasHdConfigImpl);
+const CanvasHdConfigImplObserver = observer(CanvasHdConfigImpl);
+export default CanvasHdConfigImplObserver;

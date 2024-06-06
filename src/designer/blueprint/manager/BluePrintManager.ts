@@ -252,6 +252,7 @@ class BluePrintManager extends AbstractManager<BluePrintManagerDataType> {
                         const Controller = bpNodeControllerMap.get(layout.type!);
                         const config = this.bpNodeConfigMap[layout.id!];
                         if (Controller) {
+                            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                             //@ts-ignore  todo这里在抽象类中统一定义了构造器格式，理论上应该支持，后续研究下是否ts不支持这种方式
                             this.bpNodeControllerInsMap[layout.id!] = new Controller(config)!;
                         }
@@ -323,11 +324,10 @@ class BluePrintManager extends AbstractManager<BluePrintManagerDataType> {
                 initUsedLayerNodes(usedLayerNodes);
             } else {
                 const bpNodeControllerInsMap: Record<string, AbstractBPNodeController> = {};
-                Object.values(data?.bpNodeLayoutMap!).forEach((layout: BPNodeLayoutType) => {
+                data && data.bpNodeLayoutMap && Object.values(data.bpNodeLayoutMap).forEach((layout: BPNodeLayoutType) => {
                     const {type, id} = layout;
                     const NodeController = bpNodeControllerMap.get(type!) as ClazzTemplate<AbstractBPNodeController>;
                     const config = data?.bpNodeConfigMap![id!];
-                    // @ts-ignore
                     bpNodeControllerInsMap[id!] = new NodeController!(config)!;
                 })
                 this.bpNodeControllerInsMap = bpNodeControllerInsMap;

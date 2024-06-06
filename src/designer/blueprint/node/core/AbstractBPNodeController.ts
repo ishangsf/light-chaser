@@ -44,7 +44,7 @@ export abstract class AbstractBPNodeController<C = any> extends AbstractControll
      * 定义统一构造器，子类不需要再定义构造器
      * @param config
      */
-    constructor(config?: C) {
+    constructor(config: C) {
         super();
         if (config)
             this.config = config;
