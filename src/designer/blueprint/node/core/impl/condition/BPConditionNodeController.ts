@@ -1,6 +1,5 @@
 import {AbstractBPNodeController, AnchorPointType, ExecuteInfoType, NodeInfoType} from "../../AbstractBPNodeController";
 import ComponentUtil from "../../../../../../utils/ComponentUtil";
-import {UpdateOptions} from "../../../../../../framework/core/AbstractController";
 import BPNode from "../../../BPNode";
 import React from "react";
 import {ConditionNodeConfig} from "./ConditionNodeConfig";
@@ -13,7 +12,7 @@ export interface ConditionConfigType extends NodeInfoType {
 
 export default class BPConditionNodeController extends AbstractBPNodeController<ConditionConfigType> {
 
-    private handler: Function | null = null;
+    private handler: ((...args: any[]) => any) | null = null;
 
     async create(container: HTMLElement, config: ConditionConfigType): Promise<void> {
         this.config = config;
@@ -51,7 +50,7 @@ export default class BPConditionNodeController extends AbstractBPNodeController<
         return this.config;
     }
 
-    update(config: ConditionConfigType, upOp?: UpdateOptions | undefined): void {
+    update(config: ConditionConfigType): void {
         this.config = ObjectUtil.merge(this.config, config);
     }
 

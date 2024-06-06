@@ -60,9 +60,9 @@ export const NewProjectDialog: React.FC<AddNewScreenDialogProps> = (props) => {
                     <p>1、名称不超过20字，描述不超过60字</p>
                     <p>2、宽度必须&ge;500，高度必须&ge;300</p>
                 </div>
-                <div className={'add-new-screen-footer'}>
-                    <Button type={"submit"}>创建</Button>
-                    <Button onClick={onCancel}>取消</Button>
+                <div className={'add-new-screen-footer'} style={{padding: 16}}>
+                    <Button style={{float: 'right'}} type={"submit"}>创建</Button>
+                    <Button style={{float: 'right', marginRight: '10px'}} onClick={onCancel}>取消</Button>
                 </div>
             </form>
         </Dialog>

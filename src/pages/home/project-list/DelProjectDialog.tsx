@@ -18,11 +18,10 @@ const DelProjectDialog = memo((props: DelDialogProps) => {
             <div className={'del-pro-confirm'} style={{
                 display: 'flex',
                 justifyContent: 'flex-end',
-                borderTop: '2px solid #272b34',
                 paddingTop: 5
             }}>
-                <Button onClick={onOk}>确认</Button>&nbsp;&nbsp;
-                <Button onClick={onCancel}>取消</Button>
+                <Button style={{float: 'right'}} onClick={onOk}>确认</Button>&nbsp;&nbsp;
+                <Button style={{float: 'right'}} onClick={onCancel}>取消</Button>
             </div>
         </Dialog>
     )

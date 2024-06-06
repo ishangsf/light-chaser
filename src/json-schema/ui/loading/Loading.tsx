@@ -1,3 +1,4 @@
+import { Skeleton, Spin } from 'antd';
 import {Component} from 'react';
 
 interface LoadingProps {
@@ -11,9 +12,9 @@ class Loading extends Component<LoadingProps> {
         const style = {
             width,
             height,
-            backgroundColor: '#374f85',
-            background: 'linear-gradient(to right, #182848, #1a2848)',
-            color: '#1db3ff',
+            // backgroundColor: '#374f85',
+            // background: 'linear-gradient(to right, #182848, #1a2848)',
+            // color: '#1db3ff',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
@@ -21,7 +22,9 @@ class Loading extends Component<LoadingProps> {
             fontWeight: '300'
         }
         return (
-            <div style={style}>加 载 中 . . . . . .</div>
+            <Spin style={{...style}} tip="Loading" size="large">
+                <Skeleton active />
+            </Spin>
         );
     }
 }

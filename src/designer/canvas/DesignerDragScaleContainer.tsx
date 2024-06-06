@@ -4,7 +4,8 @@ import eventOperateStore from "../operate-provider/EventOperateStore";
 import {observer} from "mobx-react";
 import canvasManager from "../header/items/canvas/CanvasManager.ts";
 import ScaleAction from "../../framework/core/ScaleAction.ts";
-
+import { theme } from "antd";
+const { useToken } = theme;
 export interface DesignerDragScaleContainerProps {
     children?: React.ReactNode;
     onDoubleClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
@@ -15,6 +16,7 @@ const DesignerDragScaleContainer = (props: DesignerDragScaleContainerProps) => {
     const containerRef = React.useRef<HTMLDivElement>(null);
     const contentRef = React.useRef<HTMLDivElement>(null);
     const {canvasConfig} = canvasManager!;
+    const { token } = useToken();
     useEffect(() => {
         const container = containerRef.current;
         const content = contentRef.current;
@@ -48,7 +50,7 @@ const DesignerDragScaleContainer = (props: DesignerDragScaleContainerProps) => {
                  overflow: "hidden",
                  height: window.innerHeight - 110,
                  width: window.innerWidth - 80,
-                 backgroundColor: '#434343',
+                 backgroundColor: token.colorBgMask,
                  position: 'relative'
              }}>
             <div className={'designer-ds-content lc-drag-scale-provider'}

@@ -1,57 +1,53 @@
-import React, {Component} from 'react';
+import { useEffect, useRef } from 'react';
 import './LayerList.less';
 import layerManager from "../../manager/LayerManager.ts";
 import {observer} from "mobx-react";
 import eventOperateStore from "../../operate-provider/EventOperateStore";
 import layerBuilder from "./LayerBuilder";
-import { Layout } from 'antd';
+import { Layout, theme } from 'antd';
 import PanelHeader from '../PanelHeader.tsx';
-export interface LayerListProps {
-    children?: React.ReactNode;
-}
+const { useToken } = theme;
+const LayerList = observer(() => {
+    const { token } = useToken();
+    const layerItemsContainerRef = useRef<HTMLDivElement>(null);
+    const layerListRef = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+        const handleClick = (e: MouseEvent) => {
+            if (!layerListRef) return;
+            if (layerListRef.current && layerListRef.current.contains(e.target as Node)
+                && layerItemsContainerRef.current && layerItemsContainerRef.current.contains(e.target as Node)) {
+                const {setTargetIds, targetIds} = eventOperateStore;
+                if (targetIds.length > 0)
+                    setTargetIds([]);
+            }
+            if (layerItemsContainerRef.current && e.target instanceof Node) {
+                if (layerItemsContainerRef.current.contains(e.target)) {
+                    return;
+                }
+                const {setTargetIds, targetIds} = eventOperateStore;
+                if (targetIds.length > 0) {
+                    setTargetIds([]);
+                }
+            }
+        };
+        document.addEventListener('click', handleClick);
+        return () => document.removeEventListener('click', handleClick);
+    }, [layerItemsContainerRef]);
 
-class LayerList extends Component<LayerListProps> {
-
-    layerListRef: HTMLElement | null = null;
-
-    layerItemsContainerRef: HTMLDivElement | null = null;
-
-    componentDidMount() {
-        this.layerListRef?.addEventListener("click", this.cancelSelected);
-    }
-
-    componentWillUnmount() {
-        this.layerListRef?.removeEventListener("click", this.cancelSelected);
-    }
-
-    cancelSelected = (e: MouseEvent) => {
-        if (!this.layerListRef)
-            return;
-        if (this.layerListRef.contains(e.target as Node)
-            && !this.layerItemsContainerRef?.contains(e.target as Node)) {
-            const {setTargetIds, targetIds} = eventOperateStore;
-            if (targetIds.length > 0)
-                setTargetIds([]);
-        }
-    }
-
-    buildLayerList = () => {
+    const buildLayerList = () => {
         const {layerConfigs} = layerManager;
-        return layerBuilder.buildLayerList(layerConfigs);
-    }
+        return layerBuilder.buildLayerList(layerConfigs)
+    };
 
-    render() {
-        return (
-            <Layout className='ComponentList layer-list' style={{height: '100%', overflow: 'hidden'}}>
-                <PanelHeader title='图层列表' />
-                <Layout.Content className={'layer-items'} style={{height: '100%'}}>
-                    <div ref={ref => this.layerItemsContainerRef = ref}>
-                        {this.buildLayerList()}
-                    </div>
-                </Layout.Content>
-            </Layout>
-        );
-    }
-}
-const layerListObserver = observer(LayerList);
-export default layerListObserver;
+    return (
+        <Layout ref={layerListRef} className='ComponentList layer-list' style={{height: '100%', overflow: 'hidden', borderRight: `1px solid ${token.colorBorder}`} }>
+            <PanelHeader title='图层列表' />
+            <Layout.Content className={'layer-items'} style={{height: '100%'}}>
+                <div ref={layerItemsContainerRef}>
+                    {buildLayerList()}
+                </div>
+            </Layout.Content>
+        </Layout>
+    );
+});
+export default LayerList;

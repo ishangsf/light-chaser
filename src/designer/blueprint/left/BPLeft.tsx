@@ -8,7 +8,8 @@ import IdGenerate from "../../../utils/IdGenerate";
 import DragAddProvider from "../../../framework/drag-scale/DragAddProvider";
 import Input from "../../../json-schema/ui/input/Input.tsx";
 import {AddSubset, ApplicationOne, BytedanceMiniApp, Calculator, CardTwo, Filter, MindmapMap} from "@icon-park/react";
-
+import { theme } from "antd";
+const { useToken } = theme;
 const BPLeft: React.FC = () => {
     return (
         <div className={'bp-left'}>
@@ -20,6 +21,7 @@ const BPLeft: React.FC = () => {
 export default BPLeft;
 
 export const BPNodeSortList = observer(() => {
+    const { token } = useToken();
     const {activeMenu} = bpLeftStore;
     const nodeSortList = [
         {
@@ -44,7 +46,7 @@ export const BPNodeSortList = observer(() => {
         }
     ]
     return (
-        <div className={'bp-node-sort-list'}>
+        <div className={'bp-node-sort-list'} style={{backgroundColor: token.colorBgLayout}}>
             {
                 nodeSortList.map((item, index) => {
                     return (
@@ -102,7 +104,7 @@ export const BPNodeList = observer(() => {
     const {activeMenu, setSearchValue} = bpLeftStore;
     const NodeList = nodeListMapping[activeMenu];
     const dragAddProvider = useRef<DragAddProvider | null>(null);
-
+    const { token } = useToken();
     useEffect(() => {
         dragAddProvider.current = new DragAddProvider(
             document.getElementById("bp-node-draggable")!,
@@ -115,8 +117,8 @@ export const BPNodeList = observer(() => {
         return () => dragAddProvider.current?.destroy();
     }, [activeMenu])
     return (
-        <div className={'bp-node-list'}>
-            <div className={'bp-node-list-header'}>
+        <div className={'bp-node-list'} style={{backgroundColor: token.colorBgContainer}}>
+            <div className={'bp-node-list-header'} style={{borderBottom: `1px solid ${token.colorBorder}`}}>
                 <div className={'bp-node-list-search'}>
                     <Input placeholder={'搜索节点'} containerStyle={{width: '100%'}}
                            onChange={(value) => setSearchValue(value)}/>
@@ -132,6 +134,7 @@ export const BPNodeList = observer(() => {
 })
 
 export const BPLayerNodeList = observer(() => {
+    const { token } = useToken();
     const {layerConfigs} = layerManager;
     const {usedLayerNodes, searchValue} = bpLeftStore;
     let layerIdList = layerConfigs ? Object.keys(layerConfigs) : [];
@@ -151,6 +154,7 @@ export const BPLayerNodeList = observer(() => {
                         <div className={`bp-node-list-item bp-drag-node ${used ? 'bp-node-list-item-used' : ''}`}
                              data-id={item.id}
                              data-type={'layer-node'}
+                             style={{backgroundColor: token.colorBorderBg, border: `1px solid ${token.colorBorder}`, color: used ? token.colorTextDisabled : token.colorText}}
                              draggable={!used} key={index}>
                             <div className={'bpn-li-icon'}><CardTwo/></div>
                             <div className={'bpn-li-label'}>{item.name}</div>
@@ -203,6 +207,7 @@ export const BPFilterNodeList = () => {
 
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const nodeListMapping: { [key: string]: React.FC } = {
     'layer': BPLayerNodeList,
     'logical': BPLogicalNodeList,

@@ -3,7 +3,8 @@ import Ruler, {RulerProps} from "@scena/react-ruler";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 import {IPoint} from "../blueprint/manager/BluePrintManager.ts";
 import designerLeftStore from "../left/DesignerLeftStore";
-
+import { theme } from 'antd';
+const { useToken } = theme;
 export interface DesignerRulerRef {
     ruleWheel: () => void;
     ruleDrag: () => void;
@@ -42,7 +43,7 @@ const DesignerRuler = memo((props: RulerProps & DesignerRulerProps) => {
     const unitRef = useRef(50);
     const scrollPosRef = useRef<IPoint>({x: 0, y: 0});
     const baseOffsetRef = useRef(20);
-
+    const { token } = useToken();
     const ruleWheel = () => {
         const {scale} = eventOperateStore;
         const {dsContentRef} = eventOperateStore;
@@ -100,12 +101,12 @@ const DesignerRuler = memo((props: RulerProps & DesignerRulerProps) => {
                 <Ruler ref={rulerXRef}
                        scrollPos={scrollPosRef.current.x}
                        zoom={scale}
-                       lineColor={'#444b4d'}
-                       textColor={'#a6a6a6'}
+                       lineColor={token.colorBorder}
+                       textColor={token.colorTextDescription}
                        segment={2}
                        negativeRuler={true}
                        textOffset={[0, 10]}
-                       backgroundColor={'#1f1f1f'}
+                       backgroundColor={token.colorBgContainer}
                        unit={unitRef.current}/>
             </div>
             <div className={'lc-ruler-vertical'}
@@ -118,13 +119,13 @@ const DesignerRuler = memo((props: RulerProps & DesignerRulerProps) => {
                 <Ruler ref={rulerYRef}
                        type={'vertical'}
                        scrollPos={scrollPosRef.current.y}
-                       lineColor={'#444b4d'}
-                       textColor={'#a6a6a6'}
+                       lineColor={token.colorBorder}
+                       textColor={token.colorTextDescription}
                        zoom={scale}
                        segment={2}
                        negativeRuler={true}
                        textOffset={[10, 0]}
-                       backgroundColor={'#1f1f1f'}
+                       backgroundColor={token.colorBgContainer}
                        unit={unitRef.current}/>
             </div>
             <div className={'lc-ruler-content'} style={{

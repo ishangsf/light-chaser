@@ -13,4 +13,4 @@ export interface ComponentInfoType {
     type: string;
 }
 
-export type ClazzTemplate<C> = new () => C | null;
+export type ClazzTemplate<C> = new (config?: C) => C | null;

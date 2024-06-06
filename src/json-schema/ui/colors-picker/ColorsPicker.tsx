@@ -2,14 +2,15 @@ import {useRef, useState} from 'react';
 import './ColorsPicker.less';
 import ColorPicker from "../color-picker/ColorPicker";
 import {UIContainer, UIContainerProps} from "../ui-container/UIContainer";
-
+import { Typography, theme } from 'antd';
+const { Text } = Typography
 interface ColorsPickerProp extends UIContainerProps {
     value?: string[];
     defaultValue?: string[];
     canAdd?: boolean;
     onChange?: (data: string[]) => void;
 }
-
+const { useToken } = theme;
 export default function ColorsPicker(props: ColorsPickerProp) {
     const {value, defaultValue, canAdd, onChange, ...containerProps} = props;
     const controlled = value !== undefined && defaultValue === undefined;
@@ -17,7 +18,7 @@ export default function ColorsPicker(props: ColorsPickerProp) {
     const [stateCanAdd, setStateCanAdd] = useState(!!canAdd);
     const finalValue = controlled ? value : stateValue;
     const maxRef = useRef<number>(5);
-
+    const {token} = useToken();
     const _onChange = (color: string, id: number) => {
         const tempValue = [...finalValue!];
         tempValue[id] = color;
@@ -54,12 +55,12 @@ export default function ColorsPicker(props: ColorsPickerProp) {
                         <div className={"colors-item"} key={i + ''}>
                             <ColorPicker value={item}
                                          onChange={(color: string) => _onChange(color, i)}/>
-                            <span onClick={() => delColor(i)}><label>×</label></span>
+                            <span style={{backgroundColor: token.colorBgMask}} onClick={() => delColor(i)}><label>×</label></span>
                         </div>
                     )
                 })}
                 {stateCanAdd &&
-                <div onClick={addColor} className={'colors-pick-add-btn'}><span>+</span></div>}
+                <div onClick={addColor} className={'colors-pick-add-btn'}><span><Text>+</Text></span></div>}
             </div>
         </UIContainer>
     )

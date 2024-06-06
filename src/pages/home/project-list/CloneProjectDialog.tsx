@@ -24,7 +24,6 @@ const CloneProjectDialog = (props: CloneDialogProps) => {
             <div className={'del-pro-confirm'} style={{
                 display: 'flex',
                 justifyContent: 'flex-end',
-                borderTop: '2px solid #272b34',
                 paddingTop: 10
             }}>
                 <Button onClick={onClick}>确认</Button> &nbsp;&nbsp;

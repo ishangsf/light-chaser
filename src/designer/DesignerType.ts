@@ -241,7 +241,7 @@ export interface ILayerItem {
 /**
  * 分页数据
  */
-export interface IPage<T = {}> {
+export interface IPage<T = object> {
     records: T[];
     total: number;
     size: number;

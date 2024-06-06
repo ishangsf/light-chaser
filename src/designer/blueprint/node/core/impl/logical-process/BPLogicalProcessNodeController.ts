@@ -1,5 +1,4 @@
 import {AbstractBPNodeController, AnchorPointType, ExecuteInfoType, NodeInfoType} from "../../AbstractBPNodeController";
-import {UpdateOptions} from "../../../../../../framework/core/AbstractController";
 import ComponentUtil from "../../../../../../utils/ComponentUtil";
 import BPNode, {NodeProps} from "../../../BPNode";
 import React from "react";
@@ -13,7 +12,7 @@ export interface LogicalProcessNodeConfigType extends NodeProps {
 
 export default class BPLogicalProcessNodeController extends AbstractBPNodeController<LogicalProcessNodeConfigType> {
 
-    private handler: Function | null = null;
+    private handler: ((...args: any[]) => any) | null = null;
 
     async create(container: HTMLElement, config: LogicalProcessNodeConfigType): Promise<void> {
         this.config = config;
@@ -43,7 +42,7 @@ export default class BPLogicalProcessNodeController extends AbstractBPNodeContro
         return this.config;
     }
 
-    update(config: LogicalProcessNodeConfigType, upOp: UpdateOptions | undefined): void {
+    update(config: LogicalProcessNodeConfigType): void {
         this.config = ObjectUtil.merge(this.config, config);
     }
 

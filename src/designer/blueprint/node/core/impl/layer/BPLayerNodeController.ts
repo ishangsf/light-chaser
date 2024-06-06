@@ -1,5 +1,4 @@
 import {AbstractBPNodeController, AnchorPointType, ExecuteInfoType, NodeInfoType} from "../../AbstractBPNodeController";
-import {UpdateOptions} from "../../../../../../framework/core/AbstractController";
 import ComponentUtil from "../../../../../../utils/ComponentUtil";
 import BPNode, {NodeProps} from "../../../BPNode";
 import layerManager from "../../../../../manager/LayerManager.ts";
@@ -47,8 +46,7 @@ export default class BPLayerNodeController extends AbstractBPNodeController<Laye
         return this.config;
     }
 
-    update(config: LayerNodeConfig, upOp: UpdateOptions | undefined): void {
-    }
+    update(): void {}
 
     getNodeInfo(nodeId: string): NodeInfoType | null {
         const {layerConfigs} = layerManager;

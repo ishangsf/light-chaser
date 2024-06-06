@@ -83,7 +83,7 @@ export const SubCategoryList: React.FC = observer(() => {
 export const ComponentList = () => {
     const { token } = useToken();
     return (
-        <Layout className='ComponentList' style={{height: '100%', overflow: 'hidden'}}>
+        <Layout className='ComponentList' style={{height: '100%', overflow: 'hidden', borderRight: `1px solid ${token.colorBorder}`}}>
             <PanelHeader title='组件列表' />
             <Layout.Content style={{height: '100%'}}>
                 <Layout style={{height: '100%'}}>

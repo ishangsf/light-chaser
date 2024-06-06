@@ -27,8 +27,7 @@ const Login = memo(() => {
                 <div className={'lc-login-left'}/>
                 <div className={'lc-login-right'}>
                     <div className={'login-header'}>
-                        <p className={'header-title'}>LIGHT CHASER</p>
-                        <p className={'header-des'}>快捷，高效的数据可视化设计工具</p>
+                        <p className={'header-title'}>数据可视化系统</p>
                     </div>
                     <div className={'login-body'}>
                         <div className={'login-item'}>

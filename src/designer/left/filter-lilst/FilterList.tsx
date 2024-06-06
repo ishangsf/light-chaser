@@ -1,21 +1,19 @@
 import "./FilterList.less";
-import designerLeftStore from "../DesignerLeftStore.ts";
-import eventOperateStore from "../../operate-provider/EventOperateStore.ts";
 import { observer } from "mobx-react";
 import filterManager from "../../manager/FilterManager.ts";
 import AddFilterDialog from "./AddFilterDialog.tsx";
-import { Layout, List, Popconfirm, Skeleton } from "antd";
+import { Layout, List, Popconfirm, theme } from "antd";
 import { Help, Plus } from "@icon-park/react";
 import PanelHeader from "../PanelHeader.tsx";
-
+const { useToken } = theme;
 export const FilterList = observer(() => {
   const { filters, setEditFilter, delFilter, setVisibility } = filterManager;
-
+  const { token } = useToken();
   return (
     <>
       <Layout
         className="ComponentList dl-filter-list"
-        style={{ height: "100%", overflow: "hidden" }}
+        style={{ height: "100%", overflow: "hidden", borderRight: `1px solid ${token.colorBorder}` }}
       >
         <PanelHeader title="全局过滤器">
           <Plus

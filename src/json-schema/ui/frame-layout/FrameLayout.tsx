@@ -38,7 +38,7 @@ const FrameLayout: React.FC<FrameLayoutProps> = (props) => {
                 <Layout>
                     <Layout style={{height: 'calc(100% - 40px)', padding: 0}}>
                         <Content>{content}</Content>
-                        <Sider theme={token.colorBgBase === '#fff' ? 'light' : 'dark'} width={menus.length ? 460 : 0} style={{background: token.colorBgBase, height: '100%', overflow: 'hidden'}}>{right}</Sider>
+                        <Sider theme={token.colorBgBase === '#fff' ? 'light' : 'dark'} width={type === 'blueprint' ? 350 : menus.length ? 460 : 0} style={{background: token.colorBgBase, height: '100%', overflow: 'hidden'}}>{right}</Sider>
                     </Layout>
                     <Footer style={{padding: 0, height: 40}}>{footer}</Footer>
                 </Layout>

@@ -28,7 +28,7 @@ class LayerBuilder {
             if (currentLayer) {
                 res.push(currentLayer);
                 if (currentLayer.childHeader) {
-                    let childLayer = layerMap[currentLayer.childHeader];
+                    const childLayer = layerMap[currentLayer.childHeader];
                     iterateLayers(childLayer, res);
                 }
                 let next = currentLayer.next;

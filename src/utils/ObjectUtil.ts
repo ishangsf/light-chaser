@@ -18,7 +18,7 @@ export default class ObjectUtil {
             return originalData;
         Object.keys(newData).forEach(key => {
             const newValue = newData[key];
-            if (originalData.hasOwnProperty(key)) {
+            if (key in originalData) {
                 if (Array.isArray(newValue)) {
                     originalData[key] = newValue;
                 } else if (newValue

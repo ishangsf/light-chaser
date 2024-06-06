@@ -34,7 +34,7 @@ const menus: Array<ILeftMenu> = [
 ];
 const { Content, Sider } = Layout;
 
-export const DesignerLeft = observer(() => {
+const DesignerLeft = observer(() => {
     const { token } = useToken();
     const [items, setItems] = useState<any>();
     // 当前菜单内容区域显示状态

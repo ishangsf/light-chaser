@@ -6,12 +6,13 @@ import footerStore from "./FooterStore";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 import {CoverConfig} from "./cover/CoverConfig.tsx";
 import {useState} from "react";
-import {Tooltip} from "antd";
+import {Tooltip, Typography, theme} from "antd";
 import {Keyboard, Lightning, Magnet, MaterialThree} from "@icon-park/react";
-
+const { Text } = Typography
+const { useToken } = theme;
 //将DesignerFooter调整为hook组件
 const DesignerFooter = () => {
-
+    const { token } = useToken();
     const [enableEvent, setEnableEvent] = useState(false);
 
     const toggleHotKeyDes = () => {
@@ -37,15 +38,15 @@ const DesignerFooter = () => {
     const {hotKeyVisible, snapShotVisible} = footerStore;
     const {scale} = eventOperateStore;
     return (
-        <div className={'lc-designer-footer'}>
+        <div className={'lc-designer-footer'} style={{borderTop: `1px solid ${token.colorBorder}`}}>
             <div className={'footer-left'}>
                 <div className={'footer-item'} onClick={toggleHotKeyDes}>
                     <Keyboard/>
-                    <span>快捷键</span>
+                    <Text>Text快捷键</Text>
                 </div>
                 <div className={'footer-item'} onClick={toggleSnapShot}>
                     <MaterialThree/>
-                    <span>封面</span>
+                    <Text>封面</Text>
                 </div>
             </div>
             <div className={'footer-center'}>
@@ -63,8 +64,8 @@ const DesignerFooter = () => {
                 </div>
             </div>
             <div className={'footer-right'}>
-                <div className={'right-info-item'}>缩放 : {(scale * 100).toFixed(0)}%</div>
-                <div className={'right-info-item'}>图层 : {Object.keys(layerConfigs).length}</div>
+                <Text className={'right-info-item'}>缩放 : {(scale * 100).toFixed(0)}%</Text>
+                <Text className={'right-info-item'}>图层 : {Object.keys(layerConfigs).length}</Text>
             </div>
             {hotKeyVisible && <HotKeyDes onClose={toggleHotKeyDes}/>}
             {snapShotVisible && <CoverConfig onClose={toggleSnapShot}/>}
