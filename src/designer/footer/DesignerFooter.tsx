@@ -6,12 +6,13 @@ import footerStore from "./FooterStore";
 import eventOperateStore from "../operate-provider/EventOperateStore";
 import {CoverConfig} from "./cover/CoverConfig.tsx";
 import {useState} from "react";
-import {Tooltip, Typography} from "antd";
+import {Tooltip, Typography, theme} from "antd";
 import {Keyboard, Lightning, Magnet, MaterialThree} from "@icon-park/react";
 const { Text } = Typography
+const { useToken } = theme;
 //将DesignerFooter调整为hook组件
 const DesignerFooter = () => {
-
+    const { token } = useToken();
     const [enableEvent, setEnableEvent] = useState(false);
 
     const toggleHotKeyDes = () => {
@@ -37,7 +38,7 @@ const DesignerFooter = () => {
     const {hotKeyVisible, snapShotVisible} = footerStore;
     const {scale} = eventOperateStore;
     return (
-        <div className={'lc-designer-footer'}>
+        <div className={'lc-designer-footer'} style={{borderTop: `1px solid ${token.colorBorder}`}}>
             <div className={'footer-left'}>
                 <div className={'footer-item'} onClick={toggleHotKeyDes}>
                     <Keyboard/>

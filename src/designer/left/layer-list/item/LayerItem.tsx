@@ -1,6 +1,7 @@
+import { Typography } from "antd";
 import {BaseLayer} from "./BaseLayer";
 import {Edit, Lock, PreviewClose, PreviewOpen, Unlock} from "@icon-park/react";
-
+const { Text } = Typography;
 class LayerItem extends BaseLayer {
 
     render() {
@@ -16,7 +17,7 @@ class LayerItem extends BaseLayer {
                                             if (e.code === "Enter")
                                                 this.closeInput();
                                         }}
-                                        onBlur={this.closeInput}/> : name}
+                                        onBlur={this.closeInput}/> : <Text style={{fontSize: 12}}>{name}</Text>}
                 </div>
                 <div className={'layer-operators'}>
                     <div className={'layer-operator'} onClick={this.openInput}>
