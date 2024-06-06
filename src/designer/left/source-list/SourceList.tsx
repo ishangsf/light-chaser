@@ -7,7 +7,7 @@ const ImageSource = lazy(() => import('./image-source/ImageSource'));
 
 export default function SourceList() {
     const { token } = useToken();
-    return <div className={'source-library'}>
+    return <div className={'source-library'} style={{borderRight: `1px solid ${token.colorBorder}`}}>
         <div className={'source-categorize'} style={{backgroundColor: token.colorBgContainer}}>
             <div className={'categorize-item'}>图片</div>
         </div>
