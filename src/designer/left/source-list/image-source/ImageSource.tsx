@@ -12,13 +12,13 @@ import IdGenerate from "../../../../utils/IdGenerate";
 import {BaseImageComponentProps} from "../../../../comps/lc/base-image/BaseImageController";
 import {IImageData} from "../../../../comps/lc/base-image/BaseImageComponent";
 import DragAddProvider from "../../../../framework/drag-scale/DragAddProvider";
-import {Popconfirm} from "antd";
+import {Popconfirm, Typography, theme} from "antd";
 import historyRecordOperateProxy from "../../../operate-provider/undo-redo/HistoryRecordOperateProxy.ts";
 import {Close, Help} from "@icon-park/react";
-
-
+const { useToken } = theme;
+const {Text} = Typography;
 export default function ImageSource() {
-
+    const { token } = useToken();
     const [imageList, setImageList] = useState<IImageData[]>([]);
     const dragAddProvider = useRef<DragAddProvider | null>(null);
 
@@ -112,14 +112,14 @@ export default function ImageSource() {
         {/*<div className={'image-source-search'}>*/}
         {/*    <Input placeholder="搜索图片"/>*/}
         {/*</div>*/}
-        <div className={'image-source-list'} id={'image-source-list'}>
+        <div style={{backgroundColor: token.colorBgContainer, border: `1px solid ${token.colorBorder}`}} className={'image-source-list'} id={'image-source-list'}>
             {
                 imageList.map((item: IImageData, index: number) => {
                     return <div className={'image-source-item droppable-element'} key={index}
                                 draggable={true} data-url={item.url}
                                 data-hash={item.hash}>
-                        <div className={'image-source-item-header'}>
-                            <div className={'isi-title'}>{item.name || '无名称信息'}</div>
+                        <div style={{backgroundColor: token.colorBgLayout}} className={'image-source-item-header'}>
+                            <div className={'isi-title'}><Text style={{fontSize: 12}}>{item.name || '无名称信息'}</Text></div>
                             <div className={'isi-operate'}>
                                 <Popconfirm title="确认删除吗?"
                                             icon={<Help style={{

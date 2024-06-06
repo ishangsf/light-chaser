@@ -8,6 +8,6 @@ const viteConfig = {
     'serve': () => ({...viteBaseConfig, ...viteDevConfig}),
 }
 
-export default defineConfig(({command, mode}) => {
+export default defineConfig(({command}) => {
     return viteConfig[command]();
 });
